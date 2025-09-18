@@ -10,7 +10,7 @@ import { RootState } from "@/store/store";
 import { logout } from "@/features/auth/authSlice";
 import { clearSession } from "@/lib/secureStorage";
 
-function NavItem({ href, label, Icon }: { href: string; label: string; Icon: any }) {
+function NavItem({ href, label, Icon }: { href: string; label: string; Icon: React.ElementType }) {
 	const pathname = usePathname();
 	const active = pathname.startsWith(href);
 	return (

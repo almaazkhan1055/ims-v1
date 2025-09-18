@@ -1,18 +1,19 @@
 "use client";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/store/store";
 import { Protected } from "@/components/auth/Protected";
-import { KpiCard } from "@/components/kpi/KpiCard";
+// import { KpiCard } from "@/components/kpi/KpiCard";
 import { DashboardShell } from "@/components/layout/DashboardShell";
-import { useState } from "react";
+// import { useState } from "react";
 import { Sparkline, BarMini } from "@/components/kpi/MiniChart";
 
 export default function DashboardPage() {
-	const role = useSelector((s: RootState) => s.auth.role);
-    const [filterRole, setFilterRole] = useState<"all" | "admin" | "ta_member" | "panelist">("all");
-    const [interviewer, setInterviewer] = useState("");
-    const [range, setRange] = useState<{ from?: string; to?: string }>({});
+    // TODO: Implement dashboard filtering and KPI features
+    // const role = useSelector((s: RootState) => s.auth.role);
+    // const [filterRole, setFilterRole] = useState<"all" | "admin" | "ta_member" | "panelist">("all");
+    // const [interviewer, setInterviewer] = useState("");
+    // const [range, setRange] = useState<{ from?: string; to?: string }>({});
 
 	return (
 		<Protected>

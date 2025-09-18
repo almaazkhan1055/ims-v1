@@ -10,7 +10,7 @@ export function ThemeToggle() {
 				aria-label="Theme"
 				className="input py-1 px-2 h-8"
 				value={theme}
-				onChange={(e) => setTheme(e.target.value as any)}
+				onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
 			>
 				<option value="light">Light</option>
 				<option value="dark">Dark</option>

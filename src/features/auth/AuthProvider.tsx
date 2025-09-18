@@ -4,12 +4,13 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { bootstrapSession } from "@/features/auth/authSlice";
 import { readSession } from "@/lib/secureStorage";
+import { AuthSession } from "./types";
 
 export function AuthBootstrapper() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const session = readSession<any>();
+		const session = readSession<AuthSession>();
 		if (session?.token && session?.role && session?.user) {
 			dispatch(
 				bootstrapSession({

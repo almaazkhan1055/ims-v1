@@ -50,7 +50,7 @@ export default function CandidatesPage() {
 
 	const filtered = useMemo(() => {
 		const needle = dq.trim().toLowerCase();
-		let arr = users.filter((u) => {
+		const arr = users.filter((u) => {
 			const full = `${u.firstName} ${u.lastName}`.toLowerCase();
 			return !needle || full.includes(needle) || u.username.toLowerCase().includes(needle);
 		});
@@ -59,7 +59,7 @@ export default function CandidatesPage() {
 			return (a.company?.department || "").localeCompare(b.company?.department || "");
 		});
 		return arr;
-	}, [users, q, sort]);
+	}, [users, q, sort, dq]);
 
 	const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
 	const pageItems = filtered.slice((page - 1) * pageSize, page * pageSize);
@@ -80,7 +80,7 @@ export default function CandidatesPage() {
 					<select
 						className="input"
 						value={sort}
-						onChange={(e) => setSort(e.target.value as any)}
+						onChange={(e) => setSort(e.target.value as 'name' | 'department')}
 					>
 						<option value="name">Sort: Name</option>
 						<option value="department">Sort: Department</option>

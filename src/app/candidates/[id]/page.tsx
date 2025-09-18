@@ -31,7 +31,6 @@ const feedbackSchema = z.object({
 type FeedbackValues = z.infer<typeof feedbackSchema>;
 
 function DetailContent({ id }: { id: number }) {
-	const params = useParams<{ id: string }>();
 	const [user, setUser] = useState<UserDetail | null>(null);
 	const [todos, setTodos] = useState<TodoItem[]>([]);
 	const [posts, setPosts] = useState<PostItem[]>([]);
@@ -80,14 +79,14 @@ function DetailContent({ id }: { id: number }) {
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const hash = window.location.hash.replace("#", "");
-			if (hash === "feedback" || hash === "schedule" || hash === "profile") setTab(hash as any);
+			if (hash === "feedback" || hash === "schedule" || hash === "profile") setTab(hash as "profile" | "schedule" | "feedback");
 		}
 	}, []);
 
 	async function onSubmit(values: FeedbackValues) {
 		await new Promise((r) => setTimeout(r, 700));
 		alert("Feedback submitted (simulated). Thank you!");
-		reset();
+		reset(); // reset form without values
 	}
 
 	const fullName = useMemo(() => (user ? `${user.firstName} ${user.lastName}` : ""), [user]);

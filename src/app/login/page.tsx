@@ -46,8 +46,9 @@ export default function LoginPage() {
         );
         saveSession({ token, role: values.role, user: res });
         router.replace("/dashboard");
-    } catch (err) {
-        alert("Login failed. If DummyJSON auth is unavailable, try 'emilys' / 'emilyspass'. We'll simulate a token if needed.");
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Login failed. If DummyJSON auth is unavailable, try 'emilys' / 'emilyspass'. We'll simulate a token if needed.";
+        alert(message);
     }
 	}
 
