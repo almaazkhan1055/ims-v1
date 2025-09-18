@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Interview Management Dashboard – React/Next.js (Frontend Only)
 
-## Getting Started
+Setup
+- Node 18+
+- Install: `npm i`
+- Dev: `npm run dev` then open http://localhost:3000
 
-First, run the development server:
+Tech Choices
+- Next.js 15 (App Router) + TypeScript
+- TailwindCSS for styling
+- Redux Toolkit for global auth state
+- React Hook Form + Zod for forms and validation
+- Axios for API calls to DummyJSON
+- Radix primitives available for future UI
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Roles
+- admin: full access, role management mock
+- ta_member: candidates, dashboards, view details
+- panelist: candidates, dashboards, view details, submit feedback
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Role Simulation
+- Role is selected at login and stored in sessionStorage (non-sensitive). UI hides/blocks unauthorized actions and routes redirect to `/login` when not authenticated.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+API Endpoints (DummyJSON)
+- POST `/auth/login`
+- GET `/users`, `/users/:id`
+- GET `/todos?userId=<id>`
+- GET `/posts?userId=<id>`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Notes on DummyJSON auth stability
+- If `/auth/login` returns 400 for common samples, try `emilys` / `emilyspass`. If token is missing, the UI generates a client token to let the flow continue (frontend-only simulation).
 
-## Learn More
+OWASP UI Considerations
+- Broken Access Control: `Protected` and `RoleGate` components hide unauthorized UI; routes redirect unauthenticated users.
+- Cryptographic Failures: Do not persist passwords or secrets. Only non-sensitive session info saved in sessionStorage.
+- Injection: All inputs validated via Zod, basic sanitization via React escaping; avoid dangerouslySetInnerHTML.
+- Security Misconfiguration: No debug secrets; minimal logs.
+- Authentication: Explicit login/logout; session bootstrap on load.
+- Data Integrity: Using trusted libraries only.
+- Logging/Monitoring: Non-sensitive console logs only in dev.
+- CSRF Awareness: Submit buttons disable during submission with visual feedback.
 
-To learn more about Next.js, take a look at the following resources:
+Folder Structure (key)
+- `src/app` – routes (`/login`, `/dashboard`, `/candidates`, `/admin`)
+- `src/features/auth` – auth slice and bootstrapper
+- `src/components` – shared UI (auth gates, header, KPI card)
+- `src/lib` – `api.ts`, `secureStorage.ts`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Future Enhancements
+- Add code splitting/lazy tabs
+- Add unit tests with RTL
+- Add charts for KPIs
